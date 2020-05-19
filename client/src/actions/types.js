@@ -1,0 +1,16 @@
+export const DATA_SUCCESS = 'DATA_SUCCESS';
+export const DATA_FAILURE = 'DATA_FAILURE';
+export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
+export const SEARCH_FAILURE = 'SEARCH_FAILURE';
+export const TOP_STORIES_SUCCESS = 'TOP_STORIES_SUCCESS';
+export const TOP_STORIES_FAILURE = 'TOP_STORIES_FAILURE';
+export const USER_LOADED = 'USER_LOADED';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+export const DELETE_USER = 'DELETE_USER';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const SET_ALERT = 'SET_ALERT';
+export const REMOVE_ALERT = 'REMOVE_ALERT';

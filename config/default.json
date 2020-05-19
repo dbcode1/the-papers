@@ -1,0 +1,9 @@
+{
+	"mongoURI": "mongodb+srv://dbrusky1:iliveinaTreehouse45@the-papers-hgy0c.mongodb.net/test?retryWrites=true&w=majority",
+
+	"jwtSecret": "getThePapers",
+	"gaurdianApiKey": "3cb25f91-26b8-4f58-833f-873b0478f441",
+	"nytApiKey": "vYeKrdCjpgK0YMYXG1yl1VDZ9fhPO7Yu",
+	"newsApiKey": "b05a05005ec84712a23fe01b017a443b",
+	"googleApiKey": "b05a05005ec84712a23fe01b017a443b"
+}

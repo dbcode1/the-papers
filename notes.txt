@@ -1,0 +1,98 @@
+General Notes:
+  - all people can search news but only users can create collections of news cards
+  - card contents:
+      - url to original article
+      - thumbnail image
+      - abstract of original text
+      - title
+      - double click enters reader overlay which show title and abstract in clean design
+  - main page
+      - top stories loads and in viewer
+      - search componet top of page
+      - create a user account with instructions on features of account
+  - user page
+      - top stories on load
+      - search component
+      - collection boxes which can be expanded to view.  
+  - collections 
+      - Expanded overlays of collection in window
+      - drag articles on conatiner icons to add
+      - drag off collection to trash can
+
+
+ 
+
+CLIENT
+ [x] basic user creation component
+ [x] basic user login component
+ [x] basic container component
+ [x] Landing page layout
+
+ [x] Login page layout
+ [x] Register page layout
+ [] User page basic layout: includes dashboard
+ [] media queries and fine tuning of ui
+ 
+ [x] auth load user: action, reducer, routes/auth, app.js => isAuthenticated equals true
+ [x] user actions: create, delete, login, logout
+ [] container actions: create, delete
+ [] container actions: drag-add, drag-delete
+ 
+ [] map data into react dnd objects to be rendered like in inital-data from tutorial version
+ [] create components for Card, Container and load from DND objects
+ [x] create routing for UI : privateroutes, route
+
+  STYLING
+    guide to grid - https://css-tricks.com/snippets/css/complete-guide-grid/
+    grid layout fallbacks - https://codepen.io/rachelandrew/pen/jamLjw/
+
+    modal : https://blog.logrocket.com/building-a-modal-module-for-react-with-react-router/
+
+    [x] centering global styled container div
+    [] font family
+    [] color pallete - readability
+
+
+
+
+SERVER
+  [x] auth route for creating credentials, verifying account
+  [x] write basic route structures for users: user-login, user-delete
+  [x] test out basic route structures in POSTMAN
+
+  [x] write basic route structures for collections: card-add, card-delete, 
+  [x] test out basic route structure
+  [x] add routes to server.js
+  [x] call basic route structures from POSTMAN 
+
+  
+
+  API ROUTES
+  [x] ROUTES for creating card
+  [x] loadUserData: containers and cards
+  [x] deleteUserData: account, data
+  [x] creating container: add and change title, send id to front end
+  [x] delete container
+  [x] delete card / drag from collection and drop outside
+  
+
+DRAG 
+  [] change state into draggable structure
+  [] change drag demo into hookshttps://reactjs.org/docs/hooks-state.html ,  https://www.digitalocean.com/community/tutorials/react-converting-to-a-hook  ,  https://medium.com/@olinations/10-steps-to-convert-a-react-class-component-to-a-functional-component-with-hooks-ab198e0fa139
+
+  -----------
+  -         -
+  -  0   0  -
+  -   o o   -
+  --vvvvvvv--       
+  --mmmmmmm--
+
+
+  
+  
+
+
+FUTURE
+  [] send collection to a friend
+  [] convert react dnd to hooks:  https://codesandbox.io/s/zqwz5n5p9x?file=/src/index.js:1171-1177
+
