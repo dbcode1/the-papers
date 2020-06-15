@@ -8,5 +8,6 @@
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceRoot}/src"
 		}
-	]
+	],
+	"git.ignoreLimitWarning": true
 }

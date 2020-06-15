@@ -24,12 +24,12 @@ const StyledSubmit = styled(Button)`
 
 const Register = ({ register, isAuthenticated }) => {
 	const [formData, setFormData] = useState({
-		fullname: '',
+		name: '',
 		email: '',
 		password: '',
 	});
 
-	const { fullname, email, password } = formData;
+	const { name, email, password } = formData;
 
 	const onChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,7 +37,7 @@ const Register = ({ register, isAuthenticated }) => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		// TODO: add password one password two verify
-		register({ fullname, email, password });
+		register({ name, email, password });
 	};
 
 	if (isAuthenticated) {
@@ -49,11 +49,11 @@ const Register = ({ register, isAuthenticated }) => {
 			<DataForm onSubmit={(e) => onSubmit(e)}>
 				<Title>Register</Title>
 				<DataField>
-					<label htmlFor='fullname'>full name</label>
+					<label htmlFor='name'>full name</label>
 					<input
 						type='text'
-						value={fullname}
-						name='fullname'
+						value={name}
+						name='name'
 						onChange={(e) => onChange(e)}
 					/>
 				</DataField>

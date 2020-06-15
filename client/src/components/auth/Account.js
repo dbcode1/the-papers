@@ -38,6 +38,7 @@ const Account = ({ logout, deleteUser, isAuthenticated }) => {
 		deleteUser();
 	};
 	const logoutHandler = () => {
+		console.log('logout')
 		setAuthToken();
 		return <Redirect to='/' />;
 		logout();

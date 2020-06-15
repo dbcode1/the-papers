@@ -1,36 +1,28 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Container = require('../models/Container');
+const Schema = mongoose.Schema
 
 const CardSchema = new mongoose.Schema({
-	title: {
-		type: String,
-		required: true,
-		unique: true,
-	},
-	abstract: {
-		type: String,
-		required: true,
-	},
-	image: {
-		type: String,
-		required: true,
-	},
-	user: {
-		type: Schema.Types.ObjectId,
-		ref: 'user',
-	},
-	container: {
-		type: Schema.Types.ObjectId,
-		ref: 'Container',
-	},
-	tags: {
-		type: Array,
-	},
+  title: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String
+  },
+  abstract: {
+    type: String
+  },
+  src: {
+    type: String
+  },
+  containerTitle: {
+    type: String,
+  },
+  user: {
+    type: Schema.ObjectId,
+  },
+
+
 });
 
-// const CardSchema = new mongoose.Schema({
-// 	cardTitle: String,
-// 	collectedIn: [{ type: Schema.Types.ObjectId, ref: 'Container' }],
-// });
-module.exports = Card = mongoose.model('Card', CardSchema);
+module.exports = mongoose.model('card', CardSchema);

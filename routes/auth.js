@@ -69,4 +69,10 @@ router.post('/', async (req, res) => {
 	}
 });
 
+router.post('/logout', async (req, res) => {
+	req.user = ""
+	req.header('x-auth-token') = null
+	res.json('User logged out')
+})
+
 module.exports = router;

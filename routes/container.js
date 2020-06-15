@@ -3,22 +3,23 @@ let router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 
-const Container = require('.././models/Container');
+const Container = require('../models/Container');
+const User = require('../models/User')
 
-// add a collection
+// add a container
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
 	try {
-		const { title, user } = req.body;
+		const { title } = req.body;
 		let container = await Container.findOne({ title });
-		const userId = await User.findById(user);
+
 		if (container) {
-			return;
+			return res.json('Container exists')
 		}
 
 		container = new Container({
 			title,
-			user: userId,
+			user: req.user.id,
 		});
 
 		await container.save();
@@ -31,30 +32,30 @@ router.post('/', async (req, res) => {
 	}
 });
 
-// get all containers
+// get containers
 router.get('/', auth, async (req, res) => {
 	try {
-		// find all containers
-		const containers = await Container.find();
-
-		console.log(containers);
-		res.json(containers);
-	} catch (err) {
+		
+		const container = await Container.find({ user: req.user.id})
+		console.log(req.user.id)
+		res.json(container);
+	  } catch (err) {
 		console.error(err.message);
-		res.status(400).json(err);
-	}
+	
+		res.status(500).send('Server Error');
+	  }
 });
 
-// delete a collection
+// delete a container
 router.delete('/', auth, async (req, res) => {
 	try {
-		await Container.findOneAndRemove({ user: req.user.id });
+		await Container.findByIdAndRemove({ _id: req.body.id });
 
-		res.send('Container deleted');
-	} catch (e) {
-		console.log(e);
+		res.send('container deleted');
+	} catch (err) {
+		console.log(err);
 		if (err.kind === 'ObjectId') {
-			return res.status(500).json({ msg: 'Post not found' });
+			return res.status(500).json({ msg: 'container not found' });
 		}
 	}
 });

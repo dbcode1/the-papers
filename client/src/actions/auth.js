@@ -31,14 +31,14 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register User
-export const register = ({ fullname, email, password }) => async (dispatch) => {
+export const register = ({ name, email, password }) => async (dispatch) => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
 		},
 	};
 
-	const body = JSON.stringify({ fullname, email, password });
+	const body = JSON.stringify({ name, email, password });
 
 	try {
 		const res = await axios.post('/user', body, config);
@@ -93,6 +93,7 @@ export const login = (email, password) => async (dispatch) => {
 
 		if (errors) {
 			const errorMessage = errors[0].msg;
+			console.log(Array.isArray(errorMessage));
 			errors.forEach((error) => dispatch(setAlert(errorMessage, 'danger')));
 		}
 

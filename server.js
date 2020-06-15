@@ -1,23 +1,17 @@
 // main entry
 const express = require('express');
 const connectDB = require('./config/db');
-const compression = require('compression');
-const rateLimit = require('express-rate-limit');
 const path = require('path');
 
 const app = express();
 connectDB();
-app.use(compression());
+
 app.use(express.json({ extended: false }));
 
 const PORT = process.env.PORT || 5000;
 
 process.env.DEBUG = true;
 
-const limiter = rateLimit({
-	windowMs: 1000, // 1 second
-	max: 1, // limit each IP to 1 requests per windowMs
-});
 
 //  apply middleware to all requests
 //app.use(limiter);
@@ -46,3 +40,4 @@ if (process.env.NODE_ENV === 'production') {
 app.listen(PORT, () => {
 	console.log(`Server  started on ${PORT}`);
 });
+

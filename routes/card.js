@@ -4,17 +4,15 @@ const { check, validationResult } = require('express-validator');
 const Container = require('../models/Container');
 const auth = require('../middleware/auth');
 
-//const auth = require('../../middleware/auth');
-
 const Card = require('../models/Card');
 
 // ondrop in container add card
 router.post('/', auth, async (req, res) => {
-	const { title, abstract, image, tags, container, user } = req.body;
+	const { title, abstract, image, tags, containerTitle, user } = req.body;
 
 	let card = await Card.findOne({ title });
 	if (card) {
-		res.send('News article already exists in this location');
+		return res.send('News article already exists in this location');
 	}
 	try {
 		card = new Card({
@@ -22,27 +20,39 @@ router.post('/', auth, async (req, res) => {
 			abstract,
 			image,
 			tags,
-			container,
-			user,
+			containerTitle, // grab from redux and send with request
+			user: req.user.id,
 		});
 
-		res.send(card);
 		await card.save();
+		res.send(card)
 	} catch (err) {
 		console.log(err);
 		//res.send('Server error');
 	}
 });
 
-// get all cards by container id
-router.get('/:id', auth, async (req, res) => {
-	try {
-		// find all cards with container == req.container
-		const containerCards = await Card.find({
-			container: req.params.id,
-		});
+// get all cards by container title
+// router.get('/:title', auth, async (req, res) => {
+// 	try {
+// 		const containerCards = await Card.find({
+// 			containerTitle: req.params.title,
+// 		});
 
-		console.log(containerCards);
+// 		console.log(containerCards);
+// 		res.send(containerCards);
+// 	} catch (err) {
+// 		console.error(err.message);
+// 		res.status(400).json(err);
+// 	}
+// });
+
+router.get('/', auth, async (req, res) => {
+	try {
+		const containerCards = await Card.find({
+			containerTitle: req.body.containerTitle
+		})
+	
 		res.send(containerCards);
 	} catch (err) {
 		console.error(err.message);
@@ -50,11 +60,11 @@ router.get('/:id', auth, async (req, res) => {
 	}
 });
 
-// delete card on drop outside container
-// delete a collection
+
+// delete a card
 router.delete('/', auth, async (req, res) => {
 	try {
-		await Card.findOneAndRemove({ user: req.user.id });
+		await Card.findOneAndRemove({ _id: req.body.id });
 
 		res.send('Card deleted');
 	} catch (e) {
