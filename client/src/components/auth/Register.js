@@ -76,7 +76,6 @@ const Register = ({ register, isAuthenticated }) => {
 						onChange={(e) => onChange(e)}
 					/>
 				</DataField>
-
 				<StyledSubmit>Submit</StyledSubmit>
 			</DataForm>
 		</Fragment>

@@ -58,8 +58,6 @@ const Login = ({ login, isAuthenticated, alertMessage }) => {
 
 	return (
 		<Fragment>
-			<Alert></Alert>
-
 			<DataForm onSubmit={(e) => onSubmit(e)}>
 				<Title>Login</Title>
 				<DataField>

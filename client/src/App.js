@@ -11,6 +11,8 @@ import Login from './components/auth/Login';
 import { logout } from './actions/auth';
 
 import Dashboard from './components/layout/Dashboard';
+import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
+
 import Search from './components/results/Search';
 import Collection from './components/results/Collection';
 import setAuthToken from './utils/setAuthToken';
@@ -27,21 +29,28 @@ const App = () => {
 		store.dispatch(loadUser());
 	}, []);
 
-	return (
-		<Provider store={store}>
-			<Router>
-				<Route exact path='/' component={Landing} />
+	const FadingBackground = styled(BaseModalBackground)`
+		opacity: ${props => props.opacity};
+		transition: opacity ease 200ms;
+	`;
 
-				<Switch>
-					<Route exact path='/register' component={Register} />
-					<Route exact path='/login' component={Login} />
-					<PrivateRoute exact path='/dashboard' component={Dashboard} />
-					<PrivateRoute exact path='/search' component={Search} />
-					<PrivateRoute exact path='/collection' component={Collection} />
-					<PrivateRoute exact path='/account' component={Account} />
-				</Switch>
-			</Router>
-		</Provider>
+
+	return (
+		<ModalProvider backgroundComponent={FadingBackground}>
+			<Provider store={store}>
+				<Router>
+					<Route exact path='/' component={Landing} />
+					<Switch>
+						<Route exact path='/register' component={Register} />
+						<Route exact path='/login' component={Login} />
+						<PrivateRoute exact path='/dashboard' component={Dashboard} />
+						<PrivateRoute exact path='/search' component={Search} />
+						<PrivateRoute exact path='/collection' component={Collection} />
+						<PrivateRoute exact path='/account' component={Account} />
+					</Switch>
+				</Router>
+			</Provider>
+		</ModalProvider>
 	);
 };
 

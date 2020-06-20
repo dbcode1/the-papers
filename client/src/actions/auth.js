@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 import store from '../store';
+
 import {
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
@@ -74,27 +75,31 @@ export const login = (email, password) => async (dispatch) => {
 		},
 	};
 
-	const body = JSON.stringify({ email, password });
-	console.log(body);
+	
 
 	try {
-		const res = await axios.post('/auth', body, config);
+
+		const body = JSON.stringify({ email, password });
+
+		const res = await axios.post('/auth/login', body, config);
 
 		dispatch({
 			type: LOGIN_SUCCESS,
 			payload: res.data,
 		});
 
+		console.log(res.data)
+
 		dispatch(loadUser());
 	} catch (err) {
-		console.log(err.message);
+		console.log(err);
 
-		const errors = err.response.data.errors;
+		
 
-		if (errors) {
-			const errorMessage = errors[0].msg;
-			console.log(Array.isArray(errorMessage));
-			errors.forEach((error) => dispatch(setAlert(errorMessage, 'danger')));
+		if (err) {
+			// const errorMessage = errors[0].msg;
+			// console.log(Array.isArray(errorMessage));
+			// errors.forEach((error) => dispatch(setAlert(errorMessage, 'danger')));
 		}
 
 		dispatch({
