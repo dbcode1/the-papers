@@ -4,57 +4,64 @@ let router = express.Router();
 const config = require('config');
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
+const { filter } = require('compression');
+
+const articleObjects = require('./helpers/articleObjects')
 
 // retrieve by search term //
 router.get('/', async (req, res) => {
-	const query = req.query.q;
-
+	const query = req.query.q
 	// using config to hide keys
-	const gaurdianKeyword = `https://content.guardianapis.com/search?show-fields=thumbnail&q=${query}&page-size=200&api-key=${config.get(
+	const gaurdianKeyword = `https://content.guardianapis.com/search?q=${query}&show-fields=thumbnail&page-size=50&api-key=${config.get(
 		'gaurdianApiKey'
 	)}`;
-
-	// const gaurdianKeyword =
-	// 	'https://content.guardianapis.com/search?show-fields=thumbnail&q=' +
-	// 	query +
-	// 	'&page-size=200&api-key=3cb25f91-26b8-4f58-833f-873b0478f441';
-
-	const nytKeyword = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}
+	const nytKeyword = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&page=1
 		&api-key=${config.get('nytApiKey')}`;
-
-	const googleKeyword = `http://newsapi.org/v2/everything?q=${query}
-		&apiKey=${config.get('googleApiKey')}`;
-
-	const newsApi = `https://newsapi.org/v2/everything?q=${query}&apiKey=${config.get(
+	const newsApi = `https://newsapi.org/v2/everything?q=${query}&pageSize=40&apiKey=${config.get(
 		'newsApiKey'
 	)}`;
 
+	// call apis
 	const gaurdianReq = await axios.get(gaurdianKeyword);
 	const nytKeywordReq = await axios.get(nytKeyword);
-	const googleReq = await axios.get(googleKeyword);
 	const newsApiReq = await axios.get(newsApi);
 
-	const allSearchData = axios
-		.all([gaurdianReq, nytKeywordReq, googleReq, newsApiReq])
+  const allSearchData = axios
+	 	.all([gaurdianReq, nytKeywordReq, newsApiReq]) //  newsApiNews 
 		.then(
-			axios.spread((...responses) => {
+	 		axios.spread((...responses) => {
 				const gaurdianRes = responses[0];
 				const nytKeywordRes = responses[1];
-				const googleRes = responses[2];
-				const newsApiRes = responses[3];
-				res
-					.status(200)
-					.send([
-						gaurdianRes.data,
-						nytKeywordRes.data,
-						googleRes.data,
-						newsApiRes.data,
-					]);
-			})
-		)
-		.catch((err) => {
-			console.log(err.response);
-		});
+				const newsApiRes = responses[2];
+				
+				// filter out metadata
+				const gaurdianResults = gaurdianRes.data.response.results;
+				const nytResults = nytKeywordRes.data.response.docs;
+				const newsApiResults = newsApiRes.data.articles;
+
+				// format data into new objects
+				const allArticles = articleObjects(gaurdianResults, nytResults, newsApiResults)
+
+				// randomize results with Fischer-Yates algorithm
+				const randomResults = (array) => {
+					for(let i = array.length - 1; i > 0; i--){
+						const j = Math.floor(Math.random() * i)
+						const temp = array[i]
+						array[i] = array[j]
+						array[j] = temp
+					}
+					return array 
+				}
+
+				res.status(200).send(
+					//randomResults(filteredNews)
+					randomResults(allArticles)
+				);
+	 		})
+	 	)
+	 	.catch((err) => {
+	 		console.log(err.response);
+	 	});
 });
 
 module.exports = router;

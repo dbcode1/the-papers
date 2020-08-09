@@ -22,7 +22,7 @@ const Button = styled.button`
 	&:hover {
 		color: black;
 		background-color: white;
-		border-color: white;
+		border: 2px solid blue
 	}
 `;
 export default Button;

@@ -18,7 +18,7 @@ const OptionsButton = styled(Button)`
 	margin: 2em auto 1em auto;
 	letter-spacing: 2.5px;
 	border-radius: 6px;
-`;
+`; 
 
 const accountButtons = styled.div`
 	transform: translate(-50%, -50%);
@@ -32,7 +32,7 @@ const accountButtons = styled.div`
 
 const Account = ({ logout, deleteUser, isAuthenticated }) => {
 	const deleteHandler = () => {
-		//setAuthToken();
+		// setAuthToken();
 
 		return <Redirect to='/' />;
 		deleteUser();

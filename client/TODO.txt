@@ -1,0 +1,7 @@
+	// ad to collection  
+	// make card object to send to express route with containerTitle in req.body
+    // target.name: target.value
+	// check for existing collection
+	// if no collection create collection with title
+  // add object to DB with containerTitle
+  // add auth middle where and redirect back to landing 

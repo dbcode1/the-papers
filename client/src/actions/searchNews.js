@@ -2,22 +2,24 @@ import { SEARCH_SUCCESS, SEARCH_FAILURE } from './types';
 import axios from 'axios';
 
 export const searchNews = (searchTerm) => async (dispatch) => {
-	//	cors();
-	console.log('search');
+	console.log('search action');
 	try {
+		
 		const callSearchNews = await axios.get('/search-news', {
 			params: {
 				q: searchTerm,
 			},
 		});
+		
+		// formatted results
+		console.log('action', callSearchNews.data);
 
-		console.log('action', callSearchNews);
 		dispatch({
 			type: SEARCH_SUCCESS,
-			// should this be callSearchnews.data ????
 			payload: callSearchNews,
 		});
 	} catch (err) {
+		console.log(err)
 		dispatch({
 			type: SEARCH_FAILURE,
 			payload: {
@@ -27,3 +29,5 @@ export const searchNews = (searchTerm) => async (dispatch) => {
 		});
 	}
 };
+
+export default searchNews

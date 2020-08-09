@@ -1,7 +1,9 @@
 {
-    "mongoURI":  "mongodb://db-man:gettingfurther@news-app-shard-00-00-llvhx.mongodb.net:27017,news-app-shard-00-01-llvhx.mongodb.net:27017,news-app-shard-00-02-llvhx.mongodb.net:27017/news?ssl=true&replicaSet=news-app-shard-0&authSource=admin&retryWrites=true&w=majority",
+    "mongoURI": "mongodb://db-man:!HopeJoyLove1!@news-app-shard-00-00-llvhx.mongodb.net:27017,news-app-shard-00-01-llvhx.mongodb.net:27017,news-app-shard-00-02-llvhx.mongodb.net:27017/news?ssl=true&replicaSet=news-app-shard-0&authSource=admin&retryWrites=true&w=majority",
     "jwtSecret": "HopeLoveJoy",
     "nytApiKey": "vYeKrdCjpgK0YMYXG1yl1VDZ9fhPO7Yu",
     "newsApiKey": "b05a05005ec84712a23fe01b017a443b",
-    "googleApiKey": "3cb25f91-26b8-4f58-833f-873b0478f441"
+    "googleApiKey": "3cb25f91-26b8-4f58-833f-873b0478f441",
+    "gaurdianApiKey": "0b791d2b-b793-4571-83e4-cf11b7b3f8a8"
 }
+

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import { searchNews } from '../../actions/searchNews';
-import DataView from '../layout/DataView';
 
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
@@ -15,70 +14,25 @@ import Content from '../../styled/Content';
 import Header from '../../styled/Header';
 import Global from '../../styled/Global';
 
-const DashBoard = ({ searchNews, isAuthenticated }) => {
+const Container = styled.div`
+	transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	overflow: auto;
+	width: 80%;
+`;
 
-	// Modal //
-	const StyledModal = Modal.styled`
-	width: 20rem;
-	height: 20rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: white;
-	opacity: ${props => props.opacity};
-	transition: opacity ease 500ms;
-	`;
+const NavButton = styled(Button)`
+	height: 4em;
+	width: 15em;
+	font-size: 1em;
+	margin: 2em auto 1em auto;
+	letter-spacing: 2.5px;
+	border-radius: 8px;
+`;
 
-	function FancyModalButton() {
-
-		const [isOpen, setIsOpen] = useState(false);
-		const [opacity, setOpacity] = useState(0);
-
-		function toggleModal(e) {
-			setIsOpen(!isOpen);
-		}
-
-		function afterOpen() {
-			setTimeout(() => {
-			setOpacity(1);
-			}, 10);
-		}
-
-		function beforeClose() {
-			return new Promise(resolve => {
-			setOpacity(0);
-			setTimeout(resolve, 200);
-			});
-		}
-
-		return (
-			<div>
-			<button onClick={toggleModal}>Account</button>
-			<StyledModal
-				isOpen={isOpen}
-				afterOpen={afterOpen}
-				beforeClose={beforeClose}
-				onBackgroundClick={toggleModal}
-				onEscapeKeydown={toggleModal}
-				opacity={opacity}
-				backgroundProps={{ opacity }}
-			>
-				<span>Account</span>
-				<button onClick={toggleModal}>Close me</button>
-			</StyledModal>
-			</div>
-		);
-	}
-
-	// Search //
-	const [searchTerm, setSearchTerm] = useState('');
-
-	const onChange = (e) => setSearchTerm(e.target.value);
-
-	const onSubmit = (e) => {
-		e.preventDefault();
-		searchNews(searchTerm);
-	};
+const DashBoard = ({ isAuthenticated }) => {
 
 	if (isAuthenticated !== true) {
 		return <Redirect to='/' />;
@@ -87,30 +41,25 @@ const DashBoard = ({ searchNews, isAuthenticated }) => {
 	// insert DataViews when ready to work with api data
 	return (
 		<Global>
-			<Header>
-				<Nav>
-					<Button>
-						Search
-					</Button>
-					<Button>
+				<Container>
+					<NavButton>
+					<Link to='/search'>Search</Link>
+					</NavButton>
+					<NavButton>
 						<Link to='/collection'>Collections</Link>
-					</Button>
-					
-					<FancyModalButton />
-					
-				</Nav>
-			</Header>
-			<DataView />
-
+					</NavButton>
+					<NavButton>
+						<Link to='/account' >Account</Link>
+					</NavButton>
+				</Container>
+		
 			<Content />
 		</Global>
 	);
 };
 
 const mapStateToProps = (state) => ({
-	searchNews: PropTypes.func.isRequired,
-	currentResults: state.topStories.currentResults,
 	isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { searchNews })(DashBoard);
+export default connect(mapStateToProps, {  })(DashBoard);

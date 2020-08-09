@@ -4,7 +4,7 @@ export default styled.div`
 	border: none;
 	color: black;
 	padding: 4px;
-	height: 100%;
+
 	letter-spacing: 0.7px;
 	label {
 		color: #5d6d7e;
@@ -12,6 +12,7 @@ export default styled.div`
 		padding: 0.25em;
 	}
 	input {
+
 		border: none;
 		height: 2.5em;
 		width: 15em;

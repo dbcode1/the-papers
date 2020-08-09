@@ -12,20 +12,13 @@ const PORT = process.env.PORT || 5000;
 
 process.env.DEBUG = true;
 
-
 //  apply middleware to all requests
 //app.use(limiter);
 
-app.use('/top-stories', require('./routes/topStories'));
-
 app.use('/search-news', require('./routes/searchNews'));
-
 app.use('/auth', require('./routes/auth'));
-
 app.use('/user', require('./routes/user'));
-
 app.use('/card', require('./routes/card'));
-
 app.use('/container', require('./routes/container'));
 
 // serve static assets in production
