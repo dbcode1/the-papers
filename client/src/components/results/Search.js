@@ -9,6 +9,7 @@ import {addCard, getCards, retrieveCards} from '../../actions/card';
 import {getCollections, addCollection} from '../../actions/collection'
 
 import styled from 'styled-components'
+import Input from '../../styled/Input'
 import Button from '../../styled/Button';
 import DataForm from '../../styled/DataForm';
 import DataField from '../../styled/DataField'
@@ -18,16 +19,10 @@ import BackButton from '../../styled/BackButton'
 
 import {Delete} from '@styled-icons/material/Delete'
 import {Add} from '@styled-icons/material/Add'
+import {Expand} from '@styled-icons/boxicons-regular/Expand'
 
 const StyledForm = styled.form`
-	width: 100%;
-	text-align: center;
-	background-color: #fff;
-	position: fixed;
-	padding: 16px 0 1em 0;
-	top: 0;
-	left: 0;
-	box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+
 `
 const Header = styled.div`
 	display: inline-block;
@@ -37,36 +32,31 @@ const Header = styled.div`
 const Wrapper = styled.div`
 	height: 100%;
 	width: 100%;
-	margin: 260px 0 0 0;
+	margin: 180px 0 0 0;
 	padding: 0;
+	form {
+		font-family: sans-serif;
+		display: flex;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		background-color: #fff;
+		position: fixed;
+		top: 0;
+		left: 0;
+		box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+	}
 `
-
+const SearchInput = styled(Input)`
+	border: grey;
+`
 const SearchTitle = styled.h5`
 	text-align:center;
 	letter-spacing: 1.25px;
 	margin: 1em 0 1em;
 `
-const StyledSubmit = styled(Button)`
-	height: 4em;
-	width: 15em;
-	font-size: 1em;
-	margin: 1em auto 1em auto;
-	letter-spacing: 2.5px;
-	border-radius: 6px;
-`;
-
-const SelectWrapper = styled.div`
-	:after {
-	font-size: 28px;
-	position: absolute;
-	top: 12px;
-	right: 20px;
-	color: #434B67;
-	pointer-events: none;
-
-	}
-`
 const CollectionCard = styled(DataCard)`
+	
   ul {
 		display: block;
 	}
@@ -76,11 +66,7 @@ const CollectionCard = styled(DataCard)`
 			padding-left: 10px;
 		}
 	}
-		
-	}
 `
-
-
 const AddCollection = styled(Add)`
 	width: 30px;
  `
@@ -100,6 +86,7 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 		setSearchTerm({ ...searchWord, [e.target.name]: e.target.value });
 	};
 	
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		props.searchNews(searchTerm)
@@ -116,49 +103,45 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 		history.push(path)
 	}
 
+
+
+		
 	
-	const addToCollection = (title, img, url) => {
-		const add = document.getElementById('add')
-		let containerTitle = ''
-		containerTitle = add.options[add.selectedIndex].value
-
-		console.log('select option', containerTitle)
-
-	
-		// add to collection DB
-		props.addCard(title, img, url, containerTitle)
-		//props.retrieveCards()
-		props.getCollections()
-		// no collections alert
-
-	}
+		
+	function addToCollection (e, title, img, url) {
 
 
+		const searchTitle = e.target.value
+		console.log(searchTitle)
+		
 
+		props.addCard(title, img, url, searchTitle)
 
-	const handleAdd = (e) => {
-		console.log(e.target.value)
-		console.log('change')
+		
+		// props.retrieveCards()
+		// props.getCollections()
+
 	}
 
 	const path = props.searchResults.data
 	
 	return (
 		<Wrapper>
-				<StyledForm onSubmit={(e) => onSubmit(e)}>
-						<SearchTitle>Search for Articles</SearchTitle>
-					<DataField>
+				<form onSubmit={(e) => onSubmit(e)}>
+						{/* */}
+					<SearchInput>
 							<input
 								type='text'
 								name='searchTerm'
 								value={searchTerm}
+								placeholder="Enter Term"
 								required
 								onChange={(e) => onChange(e)}
 								minLength='3'
 									/>
-					</DataField>
-					<StyledSubmit>Search</StyledSubmit>	
-				</StyledForm>
+					</SearchInput>
+					<Button>Search</Button>	
+				</form>
 			<div>
 				{path && (path.map(article => {
 					// grab data
@@ -171,17 +154,15 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 						<CollectionCard id="card" >
 							<ul>
 								<li>
-									<select  id="add" name="collections" onChange={e => handleAdd(e)} >
-									
+									<select  id="add" key={Math.random()} name="collections" onChange={(e) => addToCollection(e, title, img, url)} >
+										<option>Add to Collection</option>
 									{props.collectionResults.map(collection => {
 										
-										return <option value={collection.title}>{collection.title}</option>	
+										return <option id={Math.random()} value={collection.title}>{collection.title}</option>	
 									})}
 									</select>	
 								</li>
-								<li className="add">
-									<AddCollection onClick={() => addToCollection(title, img, url)}></AddCollection>
-								</li>
+							 
 							</ul>					
 							<a href={article.url} key={article.pub_date} id={article.pub_date}target="_blank">
 							 	<SearchTitle id="title">{article.title}</SearchTitle>

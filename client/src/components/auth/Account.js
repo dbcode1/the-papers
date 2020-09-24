@@ -1,4 +1,5 @@
 import React from 'react';
+import {  useHistory } from 'react-router-dom';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -7,6 +8,7 @@ import { deleteUser } from '../../actions/auth';
 import setAuthToken from '../../utils/setAuthToken';
 
 import DataField from '../../styled/DataField';
+import BackButton from '../../styled/BackButton'
 import Nav from '../../styled/Nav';
 import Button from '../../styled/Button';
 import DataForm from '../../styled/DataForm'
@@ -43,7 +45,15 @@ const Account = ({ logout, deleteUser, isAuthenticated }) => {
 		return <Redirect to='/' />;
 		logout();
 	};
+
+	const history = useHistory();
+	const back = () => {
+		const path = '/dashboard'
+		history.push(path)
+	}
+
 	return (
+		<div>
 		<DataForm>
 			<DataField>
 				<OptionsButton onClick={logout}>Logout</OptionsButton>
@@ -52,6 +62,8 @@ const Account = ({ logout, deleteUser, isAuthenticated }) => {
 				<OptionsButton onClick={deleteUser}>Delete Account</OptionsButton>
 			</DataField>
 		</DataForm>
+		<BackButton onClick={back}></BackButton>
+		</div>
 	);
 };
 const mapStateToProps = (state) => ({

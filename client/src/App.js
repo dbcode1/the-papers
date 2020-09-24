@@ -21,7 +21,11 @@ import Alert from './components/auth/Alert';
 import PrivateRoute from './routing/PrivateRoute';
 //const history = createBrowserHistory();
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+	width: 100%;
+	height: 100%
+	margin: 0
+	padding: 0`;
 
 const App = () => {
 	useEffect(() => {
@@ -29,14 +33,8 @@ const App = () => {
 		store.dispatch(loadUser());
 	}, []);
 
-	const FadingBackground = styled(BaseModalBackground)`
-		opacity: ${props => props.opacity};
-		transition: opacity ease 200ms;
-	`;
-
-
 	return (
-		<ModalProvider backgroundComponent={FadingBackground}>
+		<Wrapper>
 			<Provider store={store}>
 				<Router>
 					<Route exact path='/' component={Landing} />
@@ -50,7 +48,7 @@ const App = () => {
 					</Switch>
 				</Router>
 			</Provider>
-		</ModalProvider>
+		</Wrapper>
 	);
 };
 

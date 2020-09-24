@@ -4,10 +4,9 @@ const DataCard = styled.div`
 max-width: 200px;
 max-height: 500px;
 border: 1px solid light-grey;
-border-radius: 5px;
 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-padding: 8px;
-margin: 0 auto;
+padding: 20px;
+margin: 25px auto;
 text-align: center;
 img {
   margin: 0 auto;
