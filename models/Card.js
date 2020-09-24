@@ -6,14 +6,11 @@ const CardSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  image: {
+  img: {
     type: String
   },
-  abstract: {
-    type: String
-  },
-  src: {
-    type: String
+  url: {
+    type: String,
   },
   containerTitle: {
     type: String,

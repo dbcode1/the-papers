@@ -6,24 +6,26 @@ const auth = require('../middleware/auth');
 
 const Card = require('../models/Card');
 
-// ondrop in container add card
+// onclick of +  add card to DB
 router.post('/', auth, async (req, res) => {
-	const { title, abstract, image, tags, containerTitle, user } = req.body;
+	const { title, img, url, containerTitle, user } = req.body;
 
-	let card = await Card.findOne({ title });
-	if (card) {
-		return res.send('News article already exists in this location');
-	}
+	console.log('body', title, img, url, containerTitle )
+
+	// TODO:  Check for already exists with the container
+
+
 	try {
 		card = new Card({
-			title,
-			abstract,
-			image,
-			tags,
-			containerTitle, // grab from redux and send with request
+			title: title,
+			img: img,
+			url: url,
+			containerTitle: containerTitle, 
 			user: req.user.id,
 		});
+		 console.log('card', card)
 
+	
 		await card.save();
 		res.send(card)
 	} catch (err) {
@@ -49,11 +51,12 @@ router.post('/', auth, async (req, res) => {
 
 router.get('/', auth, async (req, res) => {
 	try {
+		console.log('title 2', req.query.q)
 		const containerCards = await Card.find({
-			containerTitle: req.body.containerTitle
+			containerTitle: req.query.q
 		})
-	
-		res.send(containerCards);
+		console.log('containerCards', containerCards)
+		res.send( containerCards);
 	} catch (err) {
 		console.error(err.message);
 		res.status(400).json(err);
@@ -64,12 +67,13 @@ router.get('/', auth, async (req, res) => {
 // delete a card
 router.delete('/', auth, async (req, res) => {
 	try {
-		await Card.findOneAndRemove({ _id: req.body.id });
-
-		res.send('Card deleted');
+		const title = req.body.title
+		await Card.deleteMany({containerTitle: title})
+		
+		res.send('cards deleted')
 	} catch (e) {
 		console.log(e);
-		if (err.kind === 'ObjectId') {
+		if (e.kind === 'ObjectId') {
 			return res.status(500).json({ msg: 'Card not found' });
 		}
 	}

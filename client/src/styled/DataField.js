@@ -12,7 +12,6 @@ export default styled.div`
 		padding: 0.25em;
 	}
 	input {
-
 		border: none;
 		height: 2.5em;
 		width: 15em;
@@ -21,5 +20,9 @@ export default styled.div`
 		text-align: center;
 		border: 1px solid #85c1e9;
 		border-radius: 6px;
+		:focus {
+			outline: none;
+		}
 	}
+
 `;

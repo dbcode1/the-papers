@@ -7,5 +7,5 @@ export default styled.form`
 	left: 50%;
 	overflow: auto;
 	text-align: center;
-	padding: 1.75em 1.5em 2.5em 1.5em;
+	padding: 0 1.5em 2.5em 1.5em;
 `;

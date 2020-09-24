@@ -6,10 +6,10 @@ import { logout } from '../../actions/auth';
 import { deleteUser } from '../../actions/auth';
 import setAuthToken from '../../utils/setAuthToken';
 
-import DataForm from '../../styled/DataForm';
 import DataField from '../../styled/DataField';
 import Nav from '../../styled/Nav';
 import Button from '../../styled/Button';
+import DataForm from '../../styled/DataForm'
 
 const OptionsButton = styled(Button)`
 	height: 4em;
@@ -44,14 +44,14 @@ const Account = ({ logout, deleteUser, isAuthenticated }) => {
 		logout();
 	};
 	return (
-		<accountButtons>
+		<DataForm>
 			<DataField>
 				<OptionsButton onClick={logout}>Logout</OptionsButton>
 			</DataField>
 			<DataField>
 				<OptionsButton onClick={deleteUser}>Delete Account</OptionsButton>
 			</DataField>
-		</accountButtons>
+		</DataForm>
 	);
 };
 const mapStateToProps = (state) => ({

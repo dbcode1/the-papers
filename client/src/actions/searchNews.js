@@ -12,7 +12,6 @@ export const searchNews = (searchTerm) => async (dispatch) => {
 		});
 		
 		// formatted results
-		console.log('action', callSearchNews.data);
 
 		dispatch({
 			type: SEARCH_SUCCESS,

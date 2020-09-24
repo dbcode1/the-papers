@@ -18,11 +18,17 @@ const Button = styled.button`
 	min-width: 0;
 	a {
 		text-decoration: none;
+		:focus {
+			outline: none;
+		}
+	}
+	:focus {
+		outline: none;
 	}
 	&:hover {
-		color: black;
-		background-color: white;
-		border: 2px solid blue
+		color: grey;
+		background-color: lightcyan;
+		border: 4px solid lightcyan
 	}
 `;
 export default Button;

@@ -1,48 +1,91 @@
 import {
   ADD_COLLECTION_SUCCESS,
 	ADD_COLLECTION_FAILURE,
-	GET_COLLECTIONS,
-	GET_COLLECTIONS_FAILURE
+	GET_COLLECTION_SUCCESS,
+	GET_COLLECTION_FAILURE,
+	DELETE_COLLECTION_SUCCESS,
+	DELETE_COLLECTION_FAILURE,
 } from './types';
 
 const axios = require('axios')
 
-// to be called on select in card and on collections view
+
+// update 
 export const getCollections = () => async (dispatch, req, res) => {
 	try {
 		const res = await axios.get('/container');
-
+		console.log("get collections", res)
 		dispatch({
-			type: GET_COLLECTIONS,
+			type: GET_COLLECTION_SUCCESS,
 			payload: res.data,
 		});
+
 	} catch (err) {
 		dispatch({
-			type: GET_COLLECTIONS_FAILURE,
-			payload: res.err
+			type: GET_COLLECTION_FAILURE,
+			payload: res
 		});
 	}
 };
 
 export const addCollection = (title) => async (dispatch, res, req) => {
-	console.log("addCollection")
+	const config = { 
+		headers: {'Content-Type': 'application/json'
+		}
+	}
+
 	try {
 		const res = await axios({
 			method: 'post',
 			url: '/container',
 			data: {
 				title: title
-			}
+			},
+			config
 		} )
-		console.log(res)
 
+		if(res.data == 'Container exists'){
+			 alert('Container exists')
+			 dispatch({
+				type: ADD_COLLECTION_FAILURE,
+				payload: 'Container exists',
+			});
+			return
+		}
+		
 		dispatch({
 			type: ADD_COLLECTION_SUCCESS,
 			payload: res.data,
 		});
+
 	} catch (err) {
+		console.log(err.message)
 		dispatch({
 			type: ADD_COLLECTION_FAILURE,
 		});
+}
+}
+
+export const deleteCollection = (title) => async (dispatch, res, req) => {
+	
+	try{
+		await axios({
+			method: 'delete',
+			url: '/container',
+			data: {
+				title : title
+			}
+		})
+
+		dispatch({
+			type: DELETE_COLLECTION_SUCCESS,
+			payload: title
+		});
+	} catch (err){
+		dispatch({
+			type: DELETE_COLLECTION_FAILURE,
+			payload: res.data,
+		});
+		console.log(err.message)
 	}
-};
+}

@@ -1,13 +1,18 @@
 
 import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import {searchNews} from '../../actions/searchNews'
 import { connect, useSelector } from 'react-redux';
+
+
+import {searchNews} from '../../actions/searchNews';
+import {addCard, getCards, retrieveCards} from '../../actions/card';
+import {getCollections, addCollection} from '../../actions/collection'
 
 import styled from 'styled-components'
 import Button from '../../styled/Button';
 import DataForm from '../../styled/DataForm';
 import DataField from '../../styled/DataField'
+import DataCard from '../../styled/DataCard'
 
 import BackButton from '../../styled/BackButton'
 
@@ -17,12 +22,12 @@ import {Add} from '@styled-icons/material/Add'
 const StyledForm = styled.form`
 	width: 100%;
 	text-align: center;
-	border-bottom: 1px solid lightcyan;
 	background-color: #fff;
 	position: fixed;
-	padding: 8px 0 1em 0;
+	padding: 16px 0 1em 0;
 	top: 0;
 	left: 0;
+	box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
 `
 const Header = styled.div`
 	display: inline-block;
@@ -36,10 +41,10 @@ const Wrapper = styled.div`
 	padding: 0;
 `
 
-const SearchTitle = styled.h3`
+const SearchTitle = styled.h5`
 	text-align:center;
 	letter-spacing: 1.25px;
-	margin-bottom: 0.75em;
+	margin: 1em 0 1em;
 `
 const StyledSubmit = styled(Button)`
 	height: 4em;
@@ -48,34 +53,6 @@ const StyledSubmit = styled(Button)`
 	margin: 1em auto 1em auto;
 	letter-spacing: 2.5px;
 	border-radius: 6px;
-`;
-
-const DataCard = styled.div`
-	max-width: 200px;
-	max-height: 500px;
-	border: 1px solid light-grey;
-	border-radius: 5px;
-	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-	padding: 8px;
-	margin: 0 auto;
-	img {
-		margin: 0 auto;
-		display block;
-		width: 100%;
-	}
-	select {
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		-ms-appearance: none;
-		 -o-appearance: none;
-			appearance: none;
-		height: 25px;
-		border: none;
-		border: 1px solid grey;
-		border-radius: 4px;
-		margin-left: 80px;
-		padding: 4px;
-	}
 `;
 
 const SelectWrapper = styled.div`
@@ -89,12 +66,30 @@ const SelectWrapper = styled.div`
 
 	}
 `
+const CollectionCard = styled(DataCard)`
+  ul {
+		display: block;
+	}
+	li {
+		display: inline-block;
+		:nth-child(2n) {
+			padding-left: 10px;
+		}
+	}
+		
+	}
+`
 
-// const AddCollection = styled(Add)`
-// 	width: 30px;
-// `
 
-const Search = ( props, {searchResults, searchNews, isAuthenticated }) => {
+const AddCollection = styled(Add)`
+	width: 30px;
+ `
+
+const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollections, addCard, retrieveCards }) => {
+	useEffect(() => {
+		props.getCollections()
+	},[])
+
 	const [searchWord, setSearchTerm] = useState({
 		searchTerm: '',
 	});
@@ -110,18 +105,44 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated }) => {
 		props.searchNews(searchTerm)
 	};
 
+	const selectClick = (e) => {
+		const selectCollections = props.getCollections()
+		return selectCollections
+	}
+
 	const history = useHistory();
 	const back = () => {
 		const path = '/dashboard'
 		history.push(path)
 	}
 
-	// onchange of select
-	const addToCollection = () => {
-		console.log("onchange")
+	
+	const addToCollection = (title, img, url) => {
+		const add = document.getElementById('add')
+		let containerTitle = ''
+		containerTitle = add.options[add.selectedIndex].value
+
+		console.log('select option', containerTitle)
+
+	
+		// add to collection DB
+		props.addCard(title, img, url, containerTitle)
+		//props.retrieveCards()
+		props.getCollections()
+		// no collections alert
+
+	}
+
+
+
+
+	const handleAdd = (e) => {
+		console.log(e.target.value)
+		console.log('change')
 	}
 
 	const path = props.searchResults.data
+	
 	return (
 		<Wrapper>
 				<StyledForm onSubmit={(e) => onSubmit(e)}>
@@ -140,18 +161,33 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated }) => {
 				</StyledForm>
 			<div>
 				{path && (path.map(article => {
+					// grab data
+					const title = article.title
+					const img = article.img
+					const url = article.url
+					// const containerTitle = collection.title
+					
 					 return(
-						<DataCard>
-							<select name="collections" id="collections" onChange={addToCollection}>
-								<option value="add">Add To Collection</option>
-  							<option value="Trump">Trump</option>
-  							<option value="Coronavirus">Coronavirus</option>
-							</select>							
-							<a href={article.url} target="_blank">
-							 	<h6>{article.title}</h6>
-							 	<img src={article.image}/>
+						<CollectionCard id="card" >
+							<ul>
+								<li>
+									<select  id="add" name="collections" onChange={e => handleAdd(e)} >
+									
+									{props.collectionResults.map(collection => {
+										
+										return <option value={collection.title}>{collection.title}</option>	
+									})}
+									</select>	
+								</li>
+								<li className="add">
+									<AddCollection onClick={() => addToCollection(title, img, url)}></AddCollection>
+								</li>
+							</ul>					
+							<a href={article.url} key={article.pub_date} id={article.pub_date}target="_blank">
+							 	<SearchTitle id="title">{article.title}</SearchTitle>
+							 	<img id="img" src={article.img}/>
 							</a>
-						</DataCard>
+						</CollectionCard>
 							
 					 ) 
 				}))}
@@ -165,8 +201,9 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated }) => {
 
 const mapStateToProps = (state) => ({
 	searchResults: state.searchNews.searchResults,
+	collectionResults: state.collection.containers,
 	alertMessage: state.alert.alertMessage,
 	isAuthenticated: state.isAuthenticated
 });
 
-export default connect(mapStateToProps, {searchNews})(Search);
+export default connect(mapStateToProps, {searchNews, getCollections, addCard, retrieveCards})(Search);

@@ -1,6 +1,10 @@
 import {
+  ADD_CARD,
   GET_CARDS,
-  CARD_ERROR
+  CARD_ERROR, 
+  RETRIEVE_CARDS_SUCCESS,
+  DELETE_CARDS_SUCCESS,
+  DELETE_CARDS_FAILURE
 } from '../actions/types';
 
 const initialState = {
@@ -14,8 +18,21 @@ const initialState = {
 export default function(state= initialState, action){
   const { type, payload} = action
   switch(type){
+
+    case ADD_CARD:
+      return {
+      ...state,
+      cards: [...state.cards, payload],
+      loading: false
+    }
     
     case GET_CARDS:
+      return {
+      ...state,
+      cards: payload,
+      loading: false
+    }
+    case RETRIEVE_CARDS_SUCCESS:
       return {
       ...state,
       cards: payload,
@@ -27,6 +44,12 @@ export default function(state= initialState, action){
       error: payload,
       loading: false,
     }
+    case DELETE_CARDS_SUCCESS:
+      return {
+        ...state,
+        cards: state.cards.filter(card => card.containerTitle!== payload ),
+        loading: false,
+      }
   default:
     return state
 }
