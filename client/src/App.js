@@ -10,9 +10,8 @@ import Account from './components/auth/Account';
 import Login from './components/auth/Login';
 import { logout } from './actions/auth';
 
-import Dashboard from './components/layout/Dashboard';
-import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
+import Dashboard from './components/layout/Dashboard';
 import Search from './components/results/Search';
 import Collection from './components/results/Collection';
 import setAuthToken from './utils/setAuthToken';
@@ -23,9 +22,24 @@ import PrivateRoute from './routing/PrivateRoute';
 
 const Wrapper = styled.div`
 	width: 100%;
-	height: 100%
+	height: 100%;
 	margin: 0
-	padding: 0`;
+	padding: 0;
+	overflow-y: hidden; 
+	overflow-x: hidden; 
+	h1 {
+		font-size: 5.9vw;
+	}
+
+	h2 {
+		font-size: 3.0vh;
+	}
+
+	p {
+		font-size: 4vmin;
+	
+	}
+	`
 
 const App = () => {
 	useEffect(() => {
@@ -36,6 +50,7 @@ const App = () => {
 	return (
 		<Wrapper>
 			<Provider store={store}>
+				<Alert></Alert>
 				<Router>
 					<Route exact path='/' component={Landing} />
 					<Switch>

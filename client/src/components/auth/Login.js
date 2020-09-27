@@ -3,27 +3,37 @@ import { login } from '../../actions/auth';
 import { alert } from '../../actions/auth';
 
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import Alert from './Alert';
 
 import styled from 'styled-components';
+import BackButton from '../../styled/BackButton'
 import DataForm from '../../styled/DataForm';
 import DataField from '../../styled/DataField';
 import Button from '../../styled/Button';
+
+const MainTitle = styled.h3`
+	font-size: 2.75em;
+	font-family: 'Jost', sans-serif;
+	text-align: center;
+	letter-spacing: 1px;
+	padding-top: 20px;
+	color: gainsboro;
+`;
 
 const Title = styled.h3`
 	letter-spacing: 1.25px;
 	margin-bottom: 0.75em;
 `;
 
-const Container = styled.div`
-	transform: translate(-50%, -50%);
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	overflow: auto;
-	width: 80%;
+const Wrapper = styled.div`
+	h4{
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		cursor: pointer;
+	}
 `;
 
 const StyledSubmit = styled(Button)`
@@ -41,6 +51,12 @@ const Login = ({ login, isAuthenticated, alertMessage }) => {
 		password: '',
 	});
 
+	let history = useHistory()
+
+	function back(){
+		history.push('/register')
+	}
+
 	const { email, password } = formData;
 
 	const onChange = (e) => {
@@ -53,11 +69,12 @@ const Login = ({ login, isAuthenticated, alertMessage }) => {
 	};
 
 	if (isAuthenticated) {
-		return <Redirect to='/dashboard' />;
+		return <Redirect to='/search' />;
 	}
 
 	return (
-		<Fragment>
+		<Wrapper>
+			<MainTitle>The Papers.</MainTitle>
 			<DataForm onSubmit={(e) => onSubmit(e)}>
 				<Title>Login</Title>
 				<DataField>
@@ -84,7 +101,9 @@ const Login = ({ login, isAuthenticated, alertMessage }) => {
 				</DataField>
 				<StyledSubmit>Login</StyledSubmit>
 			</DataForm>
-		</Fragment>
+			<h4 onClick={back}>Register</h4>
+			
+		</Wrapper>
 	);
 };
 

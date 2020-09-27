@@ -19,26 +19,14 @@ router.get('/', auth, async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-	// '/',
-	// [
-	// 	check('email', 'Please enter valid email').isEmail(),
-	// 	check('password', 'Password is required').exists(),
-	// ],
-	// async (req, res) => {
-	// 	const errors = validationResult(req);
-	// 	if (!errors.isEmpty()) {
-	// 		console.log(errors.array());
-	// 		return res.status(400).json({ errors: errors.array() });
-	// 	}
-	console.log(req.body)
+
 	const { email, password } = req.body;
 	
 	try {
 		let user = await User.findOne({ email });
 
 		if (!user) {
-			console.log('no user');
-			return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
+			return res.status(400).send({ errors: [{ msg: 'No user exists' }] });
 		}
 
 		const isMatch = await bcrypt.compare(password, user.password);

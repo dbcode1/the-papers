@@ -68,7 +68,7 @@ router.get('/', async (req, res) => {
 				randomResults(allArticles)
 			);
 		} catch(err) {
-			console.log(error)
+			console.log(err)
 			res.json({msg: 'No Results'})
 		}
 })

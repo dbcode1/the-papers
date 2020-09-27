@@ -32,24 +32,32 @@ const accountButtons = styled.div`
 	padding: 1.75em 1.5em 2.5em 1.5em;
 `;
 
-const Account = ({ logout, deleteUser, isAuthenticated }) => {
+const AccountBack = styled(BackButton)`
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	top: auto;
+	height: 45px;
+	width: 45px;
+;
+`
+const Account = ({ logout, deleteUser}) => {
 	const deleteHandler = () => {
-		// setAuthToken();
-
-		return <Redirect to='/' />;
+		//setAuthToken();
+		localStorage.setItem('token', '')
 		deleteUser();
+		
 	};
 	const logoutHandler = () => {
 		console.log('logout')
 		setAuthToken();
-		return <Redirect to='/' />;
 		logout();
+		
 	};
 
 	const history = useHistory();
 	const back = () => {
-		const path = '/dashboard'
-		history.push(path)
+		history.goBack()
 	}
 
 	return (
@@ -62,7 +70,7 @@ const Account = ({ logout, deleteUser, isAuthenticated }) => {
 				<OptionsButton onClick={deleteUser}>Delete Account</OptionsButton>
 			</DataField>
 		</DataForm>
-		<BackButton onClick={back}></BackButton>
+		<AccountBack onClick={back}></AccountBack>
 		</div>
 	);
 };

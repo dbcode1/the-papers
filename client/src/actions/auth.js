@@ -52,21 +52,13 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 		});
 		dispatch(loadUser());
 	} catch (err) {
-		const errors = err.response.data.errors;
-		console.log("errors", errors);
-
-		// if (errors) {
-		// 	errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-		// }
+		const errors = err.response.data.errors[0].msg;
+		alert(errors)
 
 		dispatch({
 			type: REGISTER_FAIL,
 		});
 	}
-};
-
-export const alert = (err) => {
-	console.log(err);
 };
 
 // Login User
@@ -81,29 +73,15 @@ export const login = (email, password) => async (dispatch) => {
 		const body = JSON.stringify({ email, password });
 		
 		const res = await axios.post('/auth/login', body, config);
-		console.log(res)
+		
 		dispatch({
 			type: LOGIN_SUCCESS,
 			payload: res.data,
 		});
 
-		console.log(res.data)
-
 		dispatch(loadUser());
 	} catch (err) {
-		console.log(err.message);
-
-		
-
-		if (err) {
-			// const errorMessage = errors[0].msg;
-			// console.log(Array.isArray(errorMessage));
-			// errors.forEach((error) => dispatch(setAlert(errorMessage, 'danger')));
-		}
-
-		dispatch({
-			type: LOGIN_FAIL,
-		});
+		alert(err.response.data.errors[0].msg); 
 	}
 };
 
@@ -116,11 +94,12 @@ export const logout = () => (dispatch) => {
 
 // Delete User Account
 export const deleteUser = () => async (dispatch) => {
-	const body = store.getState().auth.token;
-
-	await axios.delete('/user', body);
-
-	dispatch({
-		type: DELETE_USER,
-	});
+	try {
+		const body = store.getState().auth.token;
+		window.confirm('Are you sure you want to delete your account')
+		localStorage.clear()
+		await axios.delete('/user', body);
+	} catch(err) {
+		alert(err.response.data.errors[0].msg)
+	}
 };

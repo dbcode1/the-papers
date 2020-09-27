@@ -1,14 +1,16 @@
 import React, { useState, useEffect} from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import {connect} from 'react-redux'
 import styled from 'styled-components';
+
+import {NavBar} from '../layout/Nav'
 
 import Input from '../../styled/Input'
 import DataForm from '../../styled/DataForm';
 import DataField from '../../styled/DataField';
 import Nav from '../../styled/Nav';
 import Button from '../../styled/Button';
-import BackButton from '../../styled/BackButton'
+// import BackButton from '../../styled/BackButton'
 import DataCard from '../../styled/DataCard'
 import Header from '../../styled/Header'
 import {Add} from '@styled-icons/material/Add'
@@ -22,8 +24,6 @@ import {deleteCards} from '../../actions/card'
 import {retrieveCards} from '../../actions/card'
 import {clearCards} from '../../actions/card'
 import { GET_CARDS } from '../../actions/types';
-
-import Modal from './Modal'
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -69,14 +69,11 @@ const Card = styled(DataCard)`
 		float: right
 	}
 `
-
 const CollectionCard = styled(DataCard)`
    margin: 35px auto 10px auto;
 	}
 `
-const Back = styled(BackButton)`
 
-`
 const AddButton = styled(Add)`
 	width: 25px;
 	padding-right: 18px;
@@ -121,8 +118,7 @@ const Collection = (props, {addCollection, collections, getCollections, deleteCo
 
 	const history = useHistory();
 	const back = () => {
-		const path = '/dashboard'
-		history.push(path)
+		history.goBack()
 	}
 	
 	return (
@@ -169,12 +165,7 @@ const Collection = (props, {addCollection, collections, getCollections, deleteCo
 							
 					) 
 				}))}
-		
-			
-		
-			
-		<BackButton onClick={back}></BackButton>
-		
+				<NavBar></NavBar>
 		</Wrapper>
 	);
 };

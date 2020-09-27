@@ -6,9 +6,11 @@ const Alert = ({ alerts }) => {
 	if (alerts === undefined || alerts === null || alerts.length < 0) {
 		return;
 	}
+	return (
 	alerts.map((alert) => {
 		return <div>{alert.msg}</div>;
-	});
+	})
+	)
 };
 const mapStateToProps = (state) => ({ alerts: state.alert });
 

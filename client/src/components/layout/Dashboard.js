@@ -5,14 +5,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { searchNews } from '../../actions/searchNews';
 
+import Global from '../../styled/Global'
 import styled from 'styled-components';
-import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
-
 import Nav from '../../styled/Nav';
 import Button from '../../styled/Button';
 import Content from '../../styled/Content';
 import Header from '../../styled/Header';
-import Global from '../../styled/Global';
+
 
 const Container = styled.div`
 	transform: translate(-50%, -50%);
@@ -41,18 +40,17 @@ const DashBoard = ({ isAuthenticated }) => {
 	// insert DataViews when ready to work with api data
 	return (
 		<Global>
-				<Container>
-					<NavButton>
+				<Nav>
+					<Button>
 					<Link to='/search'>Search</Link>
-					</NavButton>
-					<NavButton>
+					</Button>
+					<Button>
 						<Link to='/collection'>Collections</Link>
-					</NavButton>
-					<NavButton>
+					</Button>
+					<Button>
 						<Link to='/account' >Account</Link>
-					</NavButton>
-				</Container>
-		
+					</Button>
+				</Nav>
 			<Content />
 		</Global>
 	);

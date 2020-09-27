@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 
+import {NavBar} from '../layout/Nav'
 
 import {searchNews} from '../../actions/searchNews';
 import {addCard, getCards, retrieveCards} from '../../actions/card';
@@ -14,6 +15,7 @@ import Button from '../../styled/Button';
 import DataForm from '../../styled/DataForm';
 import DataField from '../../styled/DataField'
 import DataCard from '../../styled/DataCard'
+import Nav from '../../styled/Nav'
 
 import BackButton from '../../styled/BackButton'
 
@@ -30,12 +32,12 @@ const Header = styled.div`
 `
 
 const Wrapper = styled.div`
-	height: 100%;
-	width: 100%;
+	height: 100vh;
+	width: 100vw;
 	margin: 180px 0 0 0;
 	padding: 0;
+	overflow-x: hidden;
 	form {
-		font-family: sans-serif;
 		display: flex;
 		margin: 0;
 		padding: 0;
@@ -52,24 +54,29 @@ const SearchInput = styled(Input)`
 `
 const SearchTitle = styled.h5`
 	text-align:center;
-	letter-spacing: 1.25px;
-	margin: 1em 0 1em;
+	padding: 4px 0 15px 0;
 `
 const CollectionCard = styled(DataCard)`
-	
   ul {
-		display: block;
+		list-style: none;
+		padding: 0 0 10px 0;
+		margin: 0;
+		li select { 
+			color: grey; 
+			width: 100%;
+			border-radius: 0;
+			border: 1px solid Gainsboro;
+			text-align-last:center;
+			&:focus { outline: none;}
+			option {
+				text-align: center;
+			}
+			
+	 }
 	}
-	li {
-		display: inline-block;
-		:nth-child(2n) {
-			padding-left: 10px;
-		}
-	}
+
 `
-const AddCollection = styled(Add)`
-	width: 30px;
- `
+
 
 const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollections, addCard, retrieveCards }) => {
 	useEffect(() => {
@@ -103,30 +110,14 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 		history.push(path)
 	}
 
-
-
-		
-	
-		
 	function addToCollection (e, title, img, url) {
-
-
 		const searchTitle = e.target.value
-		console.log(searchTitle)
-		
-
 		props.addCard(title, img, url, searchTitle)
-
-		
-		// props.retrieveCards()
-		// props.getCollections()
-
 	}
 
 	const path = props.searchResults.data
-	
-	return (
-		<Wrapper>
+		return (
+			<Wrapper>
 				<form onSubmit={(e) => onSubmit(e)}>
 						{/* */}
 					<SearchInput>
@@ -142,40 +133,42 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 					</SearchInput>
 					<Button>Search</Button>	
 				</form>
-			<div>
-				{path && (path.map(article => {
-					// grab data
-					const title = article.title
-					const img = article.img
-					const url = article.url
-					// const containerTitle = collection.title
-					
-					 return(
-						<CollectionCard id="card" >
-							<ul>
-								<li>
-									<select  id="add" key={Math.random()} name="collections" onChange={(e) => addToCollection(e, title, img, url)} >
-										<option>Add to Collection</option>
-									{props.collectionResults.map(collection => {
-										
-										return <option id={Math.random()} value={collection.title}>{collection.title}</option>	
-									})}
-									</select>	
-								</li>
-							 
-							</ul>					
-							<a href={article.url} key={article.pub_date} id={article.pub_date}target="_blank">
-							 	<SearchTitle id="title">{article.title}</SearchTitle>
-							 	<img id="img" src={article.img}/>
-							</a>
-						</CollectionCard>
-							
-					 ) 
-				}))}
-			</div>
-			<BackButton onClick={back}></BackButton>
-			
-		</Wrapper>
+				<div>
+					{path && (path.map(article => {
+						// grab data
+						const title = article.title
+						const img = article.img
+						const url = article.url
+						// const containerTitle = collection.title
+
+						 return(
+							<CollectionCard id="card" >
+								<ul>
+									<li>
+										<select  id="add" key={Math.random()} name="collections" onChange={(e) => addToCollection(e, title, img, url)} >
+											<option>Add to Collection</option>
+										{props.collectionResults.map(collection => {
+
+											return <option id={Math.random()} value={collection.title}>{collection.title}</option>	
+										})}
+										</select>	
+									</li>
+									
+								</ul>					
+								<a href={article.url} key={article.pub_date} id={article.pub_date}target="_blank">
+								 	<SearchTitle id="title">{article.title}</SearchTitle>
+								 	<img id="img" src={article.img}/>
+								</a>
+							</CollectionCard>
+
+						 ) 
+					}))}
+				</div>
+
+
+			<NavBar></NavBar>
+	
+			</Wrapper>	
 
 	)
 };

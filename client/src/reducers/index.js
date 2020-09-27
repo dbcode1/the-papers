@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import searchNews from './searchNews';
-import user from './user';
 import auth from './auth';
 import alert from './alert';
 import collection from './collection'

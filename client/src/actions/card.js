@@ -40,7 +40,6 @@ export const addCard = (title, img, url, containerTitle) => async (dispatch, res
 		}
   }
   // send card data to collection in DB
-  console.log('action collectionTtile', containerTitle)
   try {
     const res = await axios({
       method: 'post',

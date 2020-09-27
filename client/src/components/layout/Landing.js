@@ -49,12 +49,12 @@ const Description = styled.div`
 	margin: 1em auto 2em auto;
 	p {
 		text-align: center;
-		font-size: 2em;
-		font-size: 4vw;
-	}
+		padding: 0 0 1vh 0;
+		max-width: 80vw
+	
 `;
 
-const Title = styled.h3`
+const Title = styled.h1`
 	font-size: 2.75em;
 	font-family: 'Jost', sans-serif;
 	text-align: center;
@@ -64,9 +64,11 @@ const Title = styled.h3`
 const Styledlink = styled(GlobalLink)``;
 
 const Landing = ({ isAuthenticated }) => {
+
 	if (isAuthenticated) {
-		return <Redirect to='/dashboard' />;
+		return <Redirect to='/search' />;
 	}
+
 	return (
 		<Container>
 			<Title>The Papers.</Title>

@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Button = styled.button`
-	display: block;
 	padding: 8px;
 	text-align: center;
 	font-size: 1em;
 	text-decoration: none;
 	letter-spacing: 1.5px;
-	transition-property: background-color, color, border;
+	transition-property: background-color, color;
 	transition: 0.5s;
 	border: none;
 	border: 2px solid #5dade2;
@@ -16,6 +15,7 @@ const Button = styled.button`
 	background-color: #5dade2;
 	flex-grow: 1;
 	min-width: 0;
+	cursor: pointer;
 	a {
 		text-decoration: none;
 		:focus {
@@ -28,7 +28,7 @@ const Button = styled.button`
 	&:hover {
 		color: grey;
 		background-color: lightcyan;
-		border: 4px solid lightcyan
+		border: 2px solid AliceBlue;
 	}
 `;
 export default Button;
