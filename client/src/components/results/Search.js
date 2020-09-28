@@ -11,6 +11,7 @@ import {getCollections, addCollection} from '../../actions/collection'
 
 import styled from 'styled-components'
 import Input from '../../styled/Input'
+import NavInput from '../../styled/NavInput'
 import Button from '../../styled/Button';
 import DataForm from '../../styled/DataForm';
 import DataField from '../../styled/DataField'
@@ -34,9 +35,17 @@ const Header = styled.div`
 const Wrapper = styled.div`
 	height: 100vh;
 	width: 100vw;
-	margin: 180px 0 0 0;
+	margin: 9vh 0 0 0;
+	@media(min-width: 740px){
+		margin 11vh 0 0 0;
+	}
 	padding: 0;
-	overflow-x: hidden;
+	overflow-y: scroll;
+	::-webkit-scrollbar {
+		display: none;
+	}
+	-ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 	form {
 		display: flex;
 		margin: 0;
@@ -48,35 +57,36 @@ const Wrapper = styled.div`
 		left: 0;
 		box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
 	}
+	button{
+		font-size: 1.25em;
+	}
 `
 const SearchInput = styled(Input)`
 	border: grey;
+	width: 50vw;
+	text-align: center;
+	input {
+		font-size: 100%;
+		background-color: #fff;
+		@media(min-width: 750px) {
+			font-size: 1.25em;
+		}
+	}
 `
+
+const SearchButton = styled(Button)`
+	font-size: 1.75vw
+`
+
 const SearchTitle = styled.h5`
 	text-align:center;
 	padding: 4px 0 15px 0;
-`
-const CollectionCard = styled(DataCard)`
-  ul {
-		list-style: none;
-		padding: 0 0 10px 0;
-		margin: 0;
-		li select { 
-			color: grey; 
-			width: 100%;
-			border-radius: 0;
-			border: 1px solid Gainsboro;
-			text-align-last:center;
-			&:focus { outline: none;}
-			option {
-				text-align: center;
-			}
-			
-	 }
+	@media(min-width: 750px){ 
+		padding: 18px 0 26px 0;
+		font-size: 1.75em;
 	}
 
 `
-
 
 const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollections, addCard, retrieveCards }) => {
 	useEffect(() => {
@@ -131,7 +141,7 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 								minLength='3'
 									/>
 					</SearchInput>
-					<Button>Search</Button>	
+					<SearchButton>Search</SearchButton>	
 				</form>
 				<div>
 					{path && (path.map(article => {
@@ -142,7 +152,7 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 						// const containerTitle = collection.title
 
 						 return(
-							<CollectionCard id="card" >
+							<DataCard id="card" >
 								<ul>
 									<li>
 										<select  id="add" key={Math.random()} name="collections" onChange={(e) => addToCollection(e, title, img, url)} >
@@ -159,7 +169,7 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 								 	<SearchTitle id="title">{article.title}</SearchTitle>
 								 	<img id="img" src={article.img}/>
 								</a>
-							</CollectionCard>
+							</DataCard>
 
 						 ) 
 					}))}

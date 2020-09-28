@@ -7,7 +7,7 @@ import GlobalLink from '../../styled/GlobalLink';
 import styled from 'styled-components';
 import { Archive } from '@styled-icons/heroicons-outline/Archive';
 import { NewsPaper } from '@styled-icons/zondicons/NewsPaper';
-import { FolderOpen } from '@styled-icons/fa-regular/FolderOpen';
+import { Folder } from '@styled-icons/material-outlined/Folder';
 import { RightArrowAlt } from '@styled-icons/boxicons-regular/RightArrowAlt';
 
 const Container = styled.div`
@@ -17,41 +17,100 @@ const Container = styled.div`
 	left: 50%;
 	overflow: auto;
 	width: 80%;
+	max-width: 1000px;
 `;
 
 const Icons = styled.div`
 	margin: 1em auto 1.5 auto;
 	text-align: center;
+
 	label {
 		display: block;
 	}
 `;
-const StyledFolder = styled(FolderOpen)`
-	width: 4em;
-	position: relative;
-	top: 1.45em;
-	left: 0.5em;
+const StyledFolder = styled(Folder)`
+	width: 10.25vw;
+	padding 0.25vh 0 0 0;
+	@media(min-width: 700px) {
+		width: 10.75vw;
+		padding: 0.75vh 0 0 0;
+	}
+	@media(min-width: 800px){
+		width: 9.75vw;
+	}
+	@media(min-width: 1100px){
+		width: 8.25vw;
+	}
+	@media(min-width: 1200px) {
+		width: 7.5vw;
+	}
+	@media(min-width: 1300px) {
+		width: 7.25vw;
+	}
 `;
 
 const StyledArchive = styled(Archive)`
-	width: 4em;
+	width: 9vw;
+	@media(min-width: 600px){
+		width: 9.5vw
+	}
+	@media(min-width: 700px) {
+		width: 10.25vw;
+		margin-right: -.75vw;
+	}
+	@media(min-width: 800px) {
+		width: 8.75vw;
+		margin-right: -.75vw;
+	}
+	@media(min-width: 1100px){
+		width: 7.5vw;
+	}
+	@media(min-width: 1200px) {
+		width: 7vw;
+	}
+		@media(min-width: 1300px) {
+
+	}
 `;
 
+
 const StyledNewsPaper = styled(NewsPaper)`
-	width: 3em;
+	width: 6.75vw;
+	margin: 0.25vh 0 0 0.85vw;
+	@media(min-width: 520px){
+		width: 7vw;d
+	}
+	@media(min-width: 700px){
+		width: 7.6vw;
+		margin: 0.5vh 0.25vw 0 0.65vw;
+	}
+	@media(min-width: 800px){
+		width: 6.75vw;
+	}
+	@media(min-width: 1100px){
+		width: 6vw;
+	}
+	@media(min-width: 1200px) {
+		width: 5.75vw;
+		margin-right: -.75vw;
+	}
+	
+	
 `;
 
 const StyledArrow = styled(RightArrowAlt)`
-	width: 2em;
+	width: 6vw;
 `;
 
 const Description = styled.div`
 	margin: 1em auto 2em auto;
+	max-width: 80vw;
 	p {
 		text-align: center;
-		padding: 0 0 1vh 0;
-		max-width: 80vw
-	
+		padding: 0 0 2.85vh 0;
+		@media(min-width: 1200px){
+			padding: 0 0 5vh 0;
+		}
 `;
 
 const Title = styled.h1`
@@ -59,9 +118,18 @@ const Title = styled.h1`
 	font-family: 'Jost', sans-serif;
 	text-align: center;
 	letter-spacing: 1px;
+	padding: 0 0 0.5vh 0;
+	
 `;
 
-const Styledlink = styled(GlobalLink)``;
+const Styledlink = styled(GlobalLink)`
+	@media(min-width: 900px){
+			font-size: 2vw;
+	}
+	@media(min-width: 1200px){
+		font-size: 1.75vw;
+	}
+		`;
 
 const Landing = ({ isAuthenticated }) => {
 

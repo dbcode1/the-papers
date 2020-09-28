@@ -26,7 +26,7 @@ const Button = styled.button`
 		outline: none;
 	}
 	&:hover {
-		color: grey;
+		color: RoyalBlue;
 		background-color: lightcyan;
 		border: 2px solid AliceBlue;
 	}

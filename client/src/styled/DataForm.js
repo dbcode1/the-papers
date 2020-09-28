@@ -5,7 +5,6 @@ export default styled.form`
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	overflow: auto;
 	text-align: center;
-	padding: 0 1.5em 2.5em 1.5em;
+	margin: 0 auto;
 `;

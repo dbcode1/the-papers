@@ -4,10 +4,11 @@ const Input = styled.div`
   input {
     border: none;
     height: 5em;
-    width: 15em;
+    font-size: 100%;
+    width: 100%;
     padding: 0.4em;
     text-align: center;
-    border: none;
+    border: 1px solid LightBlue;
     color: grey;
   	&:focus {
       outline: none;

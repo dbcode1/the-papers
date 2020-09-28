@@ -26,9 +26,8 @@ export const NavBar = () => {
     border: none;
     background-color: #5dade2;
     width: 30%;
-    
     transition: 0.75s;
-    padding: 18px 0 0 0;
+    padding: 24px 0 0 0;
     transition-property: color, background-color, border;
     &:hover { background-color: #fff; }
     .link {

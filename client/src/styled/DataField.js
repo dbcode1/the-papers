@@ -3,9 +3,6 @@ import styled from 'styled-components';
 export default styled.div`
 	border: none;
 	color: black;
-	padding: 4px;
-	
-
 	letter-spacing: 0.7px;
 	label {
 		color: #5d6d7e;
@@ -17,6 +14,9 @@ export default styled.div`
 		border: none;
 		height: 2.5em;
 		width: 15em;
+		@media(min-width: 800px){
+			font-size: 125%;
+		}
 		padding: 0.4em;
 		margin-bottom: 0.75em;
 		text-align: center;

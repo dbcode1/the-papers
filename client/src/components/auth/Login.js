@@ -13,12 +13,11 @@ import DataForm from '../../styled/DataForm';
 import DataField from '../../styled/DataField';
 import Button from '../../styled/Button';
 
-const MainTitle = styled.h3`
-	font-size: 2.75em;
+const MainTitle = styled.h2`
 	font-family: 'Jost', sans-serif;
 	text-align: center;
 	letter-spacing: 1px;
-	padding-top: 20px;
+	padding-top: 6vh;
 	color: gainsboro;
 `;
 
@@ -42,7 +41,9 @@ const StyledSubmit = styled(Button)`
 	font-size: 1em;
 	margin: 2em auto 1em auto;
 	letter-spacing: 2.5px;
-	border-radius: 6px;
+	@media(min-width: 800px){
+		width: 20em;
+	}
 `;
 
 const Login = ({ login, isAuthenticated, alertMessage }) => {
