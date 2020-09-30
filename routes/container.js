@@ -69,7 +69,7 @@ router.delete('/', auth, async (req, res) => {
 	try {
 		const { title } = req.body;
 		let container = await Container.deleteOne({title});
-
+		res.send(container)
 	} catch (err) {
 		console.log(err);
 		if (err.kind === 'ObjectId') {

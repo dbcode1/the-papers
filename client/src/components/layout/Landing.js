@@ -29,7 +29,7 @@ const Icons = styled.div`
 	}
 `;
 const StyledFolder = styled(Folder)`
-	width: 10.25vw;
+	width: 11.25vw;
 	padding 0.25vh 0 0 0;
 	@media(min-width: 700px) {
 		width: 10.75vw;
@@ -50,7 +50,7 @@ const StyledFolder = styled(Folder)`
 `;
 
 const StyledArchive = styled(Archive)`
-	width: 9vw;
+	width: 11vw;
 	@media(min-width: 600px){
 		width: 9.5vw
 	}
@@ -75,10 +75,10 @@ const StyledArchive = styled(Archive)`
 
 
 const StyledNewsPaper = styled(NewsPaper)`
-	width: 6.75vw;
+	width: 8vw;
 	margin: 0.25vh 0 0 0.85vw;
 	@media(min-width: 520px){
-		width: 7vw;d
+		width: 7.5vw;
 	}
 	@media(min-width: 700px){
 		width: 7.6vw;

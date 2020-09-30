@@ -69,18 +69,21 @@ export const addCollection = (title) => async (dispatch, res, req) => {
 export const deleteCollection = (title) => async (dispatch, res, req) => {
 	
 	try{
-		await axios({
+		const res = await axios({
 			method: 'delete',
 			url: '/container',
 			data: {
 				title : title
 			}
 		})
+		if(res) {
+			dispatch({
+				type: DELETE_COLLECTION_SUCCESS,
+				payload: title
+			});
+		}
+	
 
-		dispatch({
-			type: DELETE_COLLECTION_SUCCESS,
-			payload: title
-		});
 	} catch (err){
 		dispatch({
 			type: DELETE_COLLECTION_FAILURE,

@@ -50,22 +50,11 @@ router.get('/', async (req, res) => {
 			//console.log('everything', allArticles)
 
 			// get rid of duplicates
-			const titles = []
-			allArticles.forEach(item => {
-
-				if (titles.includes(item.title)) {
-					const x = allArticles.indexOf(item)
-					allArticles.splice(x, 1)
-
-				} else {
-					titles.push(item.title);
-				}
-			});
-
-			 console.log(titles)
+		
+			const unique = [...new Set(allArticles)]
 
 			res.status(200).send(
-				randomResults(allArticles)
+				randomResults(unique)
 			);
 		} catch(err) {
 			console.log(err)

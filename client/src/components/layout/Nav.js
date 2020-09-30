@@ -20,8 +20,14 @@ export const NavBar = () => {
     box-shadow: none;
   `
   const NavButton = styled.li`
-    :nth-child(1){ margin-top: 4px;}
-    :nth-child(4){ color: #fff; padding-bottom: 10px; }
+    margin-top: 0;
+    :nth-child(4){ 
+      color: #fff; 
+      padding-bottom: 10px;
+      &:hover {
+        color: RoyalBlue;
+       }
+      }
     list-style: none;
     border: none;
     background-color: #5dade2;
@@ -40,7 +46,7 @@ export const NavBar = () => {
         text-decoration: none;
       }
     }
-
+    BackButton { color: RoyalBlue;}
   `
   return(
     <Wrapper>

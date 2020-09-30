@@ -33,24 +33,8 @@ router.post('/', auth, async (req, res) => {
 	}
 });
 
-// get all cards by container title
-// router.get('/:title', auth, async (req, res) => {
-// 	try {
-// 		const containerCards = await Card.find({
-// 			containerTitle: req.params.title,
-// 		});
-
-// 		console.log(containerCards);
-// 		res.send(containerCards);
-// 	} catch (err) {
-// 		console.error(err.message);
-// 		res.status(400).json(err);
-// 	}
-// });
-
 router.get('/', auth, async (req, res) => {
 	try {
-		console.log('title 2', req.query.q)
 		const containerCards = await Card.find({
 			containerTitle: req.query.q
 		})
@@ -69,7 +53,7 @@ router.delete('/', auth, async (req, res) => {
 		const title = req.body.title
 		await Card.deleteMany({containerTitle: title})
 		
-		res.send('cards deleted')
+		//res.send('cards deleted')
 	} catch (e) {
 		console.log(e);
 		if (e.kind === 'ObjectId') {

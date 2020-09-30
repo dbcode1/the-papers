@@ -6,7 +6,7 @@ max-width: 500px;
 max-height: 100%;
 border: 1px solid light-grey;
 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-margin: 10px auto;
+margin: 6vh auto;
 text-align: center;
 padding: 20px;
 @media(min-width: 700px) {

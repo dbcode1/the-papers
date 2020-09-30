@@ -29,7 +29,8 @@ const GlobalStyle = createGlobalStyle`
 		margin: 0
 		padding: 0;
 		overflow: hidden;
-		// font scale
+
+		// font scale //
 		h1 {
 			font-size: 5.9vw;
 			@media(min-width: 800px){
@@ -67,12 +68,22 @@ const GlobalStyle = createGlobalStyle`
 		}
 
 		h6 {
-			font-size: 3vw;
-			padding-top: 8px;
+			font-size: 3.5vw;
+			padding-top: 9px;
+			@media(min-width: 600px){
+				font-size: 3vw
+			}
+			@media(min-width: 750px){
+				font-size: 2.75vw
+			}
 		}
 
 		p {
-			font-size: 4vmin;
+			font-size: 4.5vmin;
+			@media(min-width: 600px){
+				font-size: 4vw;
+				padding-bottom: 3.5vh;
+			}
 			@media(min-width: 800px){
 				font-size: 3.5vw;
 				padding-bottom: 3.5vh;
@@ -82,6 +93,8 @@ const GlobalStyle = createGlobalStyle`
 			@media(min-width: 1400px){ font-size: 2.5vw}
 
 			}
+
+
 			
 		}
 	}

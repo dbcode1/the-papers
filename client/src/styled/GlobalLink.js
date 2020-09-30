@@ -8,7 +8,7 @@ export default styled(Link)`
 	min: width: 16vw;
 	max-width:  17vw;
 	text-align: center;
-	font-size: 2.5vw;
+	font-size: 3.5vw;
 	font-weight: 500;
 	text-decoration: none;
 	letter-spacing: 0.8px;

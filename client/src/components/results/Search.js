@@ -18,11 +18,6 @@ import DataField from '../../styled/DataField'
 import DataCard from '../../styled/DataCard'
 import Nav from '../../styled/Nav'
 
-import BackButton from '../../styled/BackButton'
-
-import {Delete} from '@styled-icons/material/Delete'
-import {Add} from '@styled-icons/material/Add'
-import {Expand} from '@styled-icons/boxicons-regular/Expand'
 
 const StyledForm = styled.form`
 
@@ -67,10 +62,9 @@ const SearchInput = styled(Input)`
 	text-align: center;
 	input {
 		font-size: 100%;
+		letter-spacing: 1.5px;
 		background-color: #fff;
-		@media(min-width: 750px) {
-			font-size: 1.25em;
-		}
+		@media(min-width: )
 	}
 `
 
@@ -128,8 +122,9 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 	const path = props.searchResults.data
 		return (
 			<Wrapper>
-				<form onSubmit={(e) => onSubmit(e)}>
-						{/* */}
+				<Nav>
+				{/* <form onSubmit={(e) => onSubmit(e)}>*/}
+						<li className="form-input">
 					<SearchInput>
 							<input
 								type='text'
@@ -141,8 +136,11 @@ const Search = ( props, {searchResults, searchNews, isAuthenticated, getCollecti
 								minLength='3'
 									/>
 					</SearchInput>
-					<SearchButton>Search</SearchButton>	
-				</form>
+					</li>
+					<li className="form-button"><SearchButton onClick={(e) => onSubmit(e)}>Search</SearchButton>	</li>
+					
+			{/*	</form>*/}
+				</Nav>
 				<div>
 					{path && (path.map(article => {
 						// grab data

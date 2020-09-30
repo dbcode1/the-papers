@@ -6,14 +6,10 @@ import styled from 'styled-components';
 import {NavBar} from '../layout/Nav'
 
 import Input from '../../styled/Input'
-import DataForm from '../../styled/DataForm';
-import DataField from '../../styled/DataField';
 import Nav from '../../styled/Nav';
-import NavInput from '../../styled/NavInput'
 import Button from '../../styled/Button';
 // import BackButton from '../../styled/BackButton'
 import DataCard from '../../styled/DataCard'
-import Header from '../../styled/Header'
 import {Add} from '@styled-icons/material/Add'
 import {DeleteOutline} from '@styled-icons/typicons/DeleteOutline'
 import {Expand} from '@styled-icons/boxicons-regular/Expand'
@@ -29,9 +25,12 @@ import { GET_CARDS } from '../../actions/types';
 const Wrapper = styled.div`
 	height: 100vh;
 	width: 100vw;
-	margin: 14vh 0 0 0;
+	margin: 9vh 0 0 0;
 	@media(min-width: 600px){
-		margin: 14vh 0 0 0;
+
+	}
+	.collection-wrapper {
+		margin: 0 0 20vh 0;
 	}
 	padding: 0;
 	overflow-y: scroll;
@@ -108,7 +107,6 @@ const Card = styled(DataCard)`
 		}
 		li.expand{
 			padding-right: 1.25vw;
-		
 		}
 		li.expand svg, li.delete svg {
 			@media(min-width: 750px) {
@@ -131,6 +129,7 @@ const CollectionCard = styled(DataCard)`
 	 max-width: 300px;
 	 padding: 10px;
 	 max-width: 370px;
+	 margin: 6vh auto;
 	 a{ 
 		 max-width: 100%;
 	 }
@@ -141,10 +140,12 @@ const AddButton = styled(Add)`
 	width: 3em;
 `
 
-const Collection = (props, {addCollection, collections, getCollections, deleteCollection, deleteCards, retrieveCards, cards, clearCards}) => {
+const Collection = (props) => {
 	useEffect(() => {
-		props.getCollections()
+		getCollections()
 	},[])
+
+	let { cards, collections, show, getCollections, deleteCollection, deleteCards, retrieveCards, clearCards, addCollection} = props
 
 	const [formData, setFormData] = useState({
 		title: '',
@@ -159,35 +160,31 @@ const Collection = (props, {addCollection, collections, getCollections, deleteCo
 	const onSubmit = (e) => {
 		console.log("add collection")
 		e.preventDefault();
-		
-		props.addCollection(title);
+		addCollection(title);
 	};
 
 	const deleteButton = (e, title, id) => {
 		e.preventDefault()
-		
-		props.deleteCards(title)
-		props.deleteCollection(title)
-		props.getCollections()
+		deleteCollection(title)
+		deleteCards(title)
+		clearCards()
+		getCollections()
 	}
 
 	const openCollection = (title) => {
-		// call for all cards matching containerTitle
-		//props.clearCards(title)
-		console.log(title)
-		props.retrieveCards(title)
+		props.show ? clearCards() : retrieveCards(title)
 	}
 
 	const history = useHistory();
 	const back = () => {
 		history.goBack()
 	}
-	
+	console.log(props.show)
 	return (
 		<Wrapper>
 			<Nav>
-					<CollectionInput>
-					
+				<li className="form-input">
+				<CollectionInput >
 						<input
 						type='title'
 						name='title'
@@ -196,12 +193,19 @@ const Collection = (props, {addCollection, collections, getCollections, deleteCo
 						onChange={(e) => onChange(e)}
 						minLength='6'
 					/></CollectionInput>
-				<Button onClick={onSubmit}>
-					<AddButton/>
-				</Button>
+				</li>
+				<li className="form-button">
+					<Button onClick={onSubmit}>
+						<AddButton/>
+					</Button>
+				</li>
+				
+
 			</Nav>
 
-				{props.collections != undefined && props.collections.length > 0 && props.collection != 'Container exists' && (props.collections.map(collection => { 
+			<div className="collection-wrapper">
+			
+				{collections != undefined && collections.length > 0 && collections != 'Container exists' && (collections.map(collection => { 
 					return(
 						<Card>							
 									<ul className="collection-header">
@@ -209,8 +213,8 @@ const Collection = (props, {addCollection, collections, getCollections, deleteCo
 										<li class="expand" onClick={() => openCollection(collection.title)}><ExpandCard></ExpandCard></li>
 										<li class="delete" key={Math.random()}><DeleteButton id={collection._id} onClick={(e) => {deleteButton(e, `${collection.title}`)}} /></li>
 									</ul>
-									{props.cards.map(card => {
-										if(collection.title == card.containerTitle){
+									{cards.map(card => {
+										if(collection.title == card.containerTitle && show){
 										return (
 										<CollectionCard>
 										<a href={card.url}>
@@ -228,7 +232,8 @@ const Collection = (props, {addCollection, collections, getCollections, deleteCo
 						</Card>
 					) 
 				}))}
-				<NavBar></NavBar>
+			</div>
+			<NavBar></NavBar>
 		</Wrapper>
 	);
 };
@@ -237,7 +242,8 @@ const Collection = (props, {addCollection, collections, getCollections, deleteCo
 
 const mapStateToProps = (state) => ({
 	collections: state.collection.containers,
-	cards: state.card.cards
+	cards: state.card.cards,
+	show: state.card.show
 });
 
 export default connect(mapStateToProps, {addCollection, getCollections, deleteCollection, deleteCards, retrieveCards, clearCards})(Collection);

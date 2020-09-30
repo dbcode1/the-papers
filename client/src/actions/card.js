@@ -92,19 +92,14 @@ export const clearCards = (title) => async (dispatch, res, req) => {
   try { 
     dispatch({
       type: CLEAR_CARDS_SUCCESS,
-      payload: title
     })
       
   } catch(err) {
-    dispatch({
-      type: RETRIEVE_CARDS_FAILURE,
-      payload: { msg: err.response.statusText, status: err.response.status}
-    })
+   
   }
 }
 
 export const deleteCards = (title) => async (dispatch, res, req) => {
-  
   try { 
     await axios({
 			method: 'delete',
@@ -113,7 +108,7 @@ export const deleteCards = (title) => async (dispatch, res, req) => {
 				title : title
 			}
     })
-    console.log('cards deleted')
+    console.log('cards deleted', )
     dispatch({
       type: DELETE_CARDS_SUCCESS,
       payload: title
