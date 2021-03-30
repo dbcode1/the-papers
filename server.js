@@ -19,9 +19,6 @@ app.use('/api/user', require('./routes/user'));
 app.use('/api/card', require('./routes/card'));
 app.use('/api/container', require('./routes/container'));
 
-if ((process.env.NODE_ENV = 'development')) {
-  app.use(cors({ origin: `http://localhost:3000` }));
-}
 
 // Serve static assets in production
 // if (process.env.NODE_ENV === 'production') {
