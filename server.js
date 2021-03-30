@@ -13,11 +13,15 @@ process.env.DEBUG = true;
 //  apply middleware to all requests
 //app.use(limiter);
 
-app.use('/search-news', require('./routes/searchNews'));
-app.use('/auth', require('./routes/auth'));
-app.use('/user', require('./routes/user'));
-app.use('/card', require('./routes/card'));
-app.use('/container', require('./routes/container'));
+app.use('/api/search-news', require('./routes/searchNews'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/user', require('./routes/user'));
+app.use('/api/card', require('./routes/card'));
+app.use('/api/container', require('./routes/container'));
+
+if ((process.env.NODE_ENV = 'development')) {
+  app.use(cors({ origin: `http://localhost:3000` }));
+}
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
