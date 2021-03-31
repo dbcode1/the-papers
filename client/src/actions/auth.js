@@ -52,7 +52,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 		});
 		dispatch(loadUser());
 	} catch (err) {
-		const errors = err.response.data.errors[0].msg;
+		const errors = err.response;
 		alert(errors)
 
 		dispatch({
